@@ -1,0 +1,41 @@
+modules = ["python-3.11"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "gobject-introspection", "gtk3", "pkg-config", "qhull", "tcl", "tk"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "CBDC Simulation"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "financial_network_simulation"
+
+[[workflows.workflow]]
+name = "CBDC Simulation"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pip install mesa matplotlib networkx pandas numpy seaborn && python main.py"
+waitForPort = 5000
+
+[[workflows.workflow]]
+name = "financial_network_simulation"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python main.py"
+
+[deployment]
+run = ["sh", "-c", "pip install mesa matplotlib networkx pandas numpy seaborn && python main.py"]
