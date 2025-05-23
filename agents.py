@@ -6,7 +6,7 @@ from mesa import Agent
 import numpy as np
 import random
 
-
+# -------------------- Central Bank Agent --------------------
 class CentralBank(Agent):
     """
     Central Bank agent that issues physical cash and CBDC.
